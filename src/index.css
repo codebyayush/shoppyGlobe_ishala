@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('/public/fonts/Rubik-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+@font-face {
+    font-family: 'MyCustomFontBold';
+    src: url('public/fonts/Rubik-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
