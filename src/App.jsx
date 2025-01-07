@@ -9,7 +9,6 @@ import useFetch from "./hooks/useFetch";
 import { addAllItems } from "./store/slices/storeSlice";
 import ProductDetails from "./components/product-details/ProductDetails";
 
-
 const Cart = lazy(() => import("./components/cart/Cart"));
 const ProductItem = lazy(() => import("./components/product-item/ProductItem"));
 const CartItem = lazy(() => import("./components/cart-item/CartItem"));
@@ -22,7 +21,7 @@ function App() {
   //using useFetch custom hook to fetch products
   const { data, loading, error } = useFetch("https://dummyjson.com/products");
 
-  if(data){
+  if (data) {
     dispatch(addAllItems(data.products));
   }
 
@@ -52,12 +51,22 @@ function App() {
             {/* for normal page we'll render ProductList */}
             <Route
               path="/"
-              element={<ProductList clickFunc={(msg) => notify(msg)} loading={loading} />}
+              element={
+                <ProductList
+                  clickFunc={(msg) => notify(msg)}
+                  loading={loading}
+                />
+              }
             />
 
             <Route
               path="/productList"
-              element={<ProductList clickFunc={(msg) => notify(msg)} loading={loading} />}
+              element={
+                <ProductList
+                  clickFunc={(msg) => notify(msg)}
+                  loading={loading}
+                />
+              }
             />
             <Route
               path="/productList/:productId"
@@ -68,6 +77,8 @@ function App() {
               element={<ProductDetails clickFunc={(msg) => notify(msg)} />}
             />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<Cart />} />
+
             <Route path="/cart/:productId" element={<CartItem />} />
           </Routes>
         </Suspense>
