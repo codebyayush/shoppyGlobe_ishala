@@ -1,8 +1,7 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import Header from "./components/header/Header";
 import ProductList from "./components/product-list/ProductList";
 import useFetch from "./hooks/useFetch";
@@ -77,8 +76,6 @@ function App() {
               element={<ProductDetails clickFunc={(msg) => notify(msg)} />}
             />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/cart" element={<Cart />} />
-
             <Route path="/cart/:productId" element={<CartItem />} />
           </Routes>
         </Suspense>
