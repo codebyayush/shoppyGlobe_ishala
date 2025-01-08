@@ -3,7 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { filterItemSearch } from "../../store/slices/storeSlice";
 
-const SearchBar = () => {
+const SearchBar = ({className}) => {
   const storeArr = useSelector((state) => state.store.storeArr);
   const dispatch = useDispatch();
 
@@ -33,12 +33,12 @@ const SearchBar = () => {
   return (
     <>
       <div>
-        <form className="flex items-center mb-2" onSubmit={handleIconClick}>
+        <form className={className} onSubmit={handleIconClick}>
           <input
             placeholder="Search Items..."
             value={searchValue}
             onChange={searchHandler}
-            className="w-[500px] p-2 outline-none focus:outline-yellow-400 text-xl"
+            className="max-w-[500px] p-2 outline-none focus:outline-yellow-400 text-xl"
             type="text"
             name="search-bar"
             id="search-bar"

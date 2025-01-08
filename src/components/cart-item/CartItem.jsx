@@ -29,7 +29,17 @@ const CartItem = () => {
     fetchProductDetails();
   }, [productId]);
 
-  return <>{product ? <ItemDetails product={product} /> : <div className="flex justify-center items-center h-screen bg-gray-900"><Loader /></div>}</>;
+  return (
+    <>
+      {product ? (
+        <ItemDetails product={product} />
+      ) : (
+        <div className="flex justify-center items-center h-screen bg-gray-900">
+          <Loader />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default CartItem;

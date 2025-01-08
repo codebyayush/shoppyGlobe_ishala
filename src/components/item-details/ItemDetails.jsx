@@ -1,6 +1,6 @@
 import React from "react";
 
-const ItemDetails = ({ product }) => {
+const ItemDetails = ({ product, addItemHandler }) => {
   const {
     title,
     description,
@@ -20,23 +20,22 @@ const ItemDetails = ({ product }) => {
     returnPolicy,
     tags,
     reviews,
-    addItemHandler,
   } = product || {};
 
   return (
     <>
-      <div className="flex justify-center pt-14 screen-max-6:w-fit screen-max-6:h-fit screen-max-12:flex-col screen-max-12:items-center bg-gray-900 min-h-screen p-5">
+      <div className="flex justify-center screen-max-9:pt-16 pt-32 screen-max-6:w-fit screen-max-6:h-fit screen-max-12:flex-col screen-max-12:items-center bg-gray-900 min-h-screen p-5">
         {/* Product Image */}
-        <div className="pt-10 screen-max-9:pt-20 screen-max-12:w-[500px]">
+        <div className="screen-max-6:pt-40 screen-max-9:pt-52 screen-max-12:w-[500px] p-4 screen-max-7:w-auto">
           <img
             src={images[0]}
             alt="product-image"
-            className="w-[500px] h-[500px] p-5 bg-white shadow-lg"
+            className="max-w-[500px] max-h-[500px] screen-max-6:w-auto screen-max-6:h-auto p-5 bg-white shadow-lg"
           />
         </div>
 
         {/* Product Details */}
-        {product && <div className="h-fit w-[500px] text-white mt-10 screen-max-12:mt-5 ml-16 screen-max-12:ml-5 screen-max-12:w-[600px]">
+        {product && <div className="h-fit w-[500px] screen-max-6:w-auto text-white screen-max-12:mt-20 ml-16 screen-max-12:ml-5 screen-max-12:w-[600px]">
           <div>
             <h1 className="text-3xl font-bold">{title}</h1>
             <p className="text-lg mt-2">{description}</p>
@@ -92,7 +91,7 @@ const ItemDetails = ({ product }) => {
               <h2 className="text-xl font-bold">Reviews:</h2>
               <div className="mt-3 space-y-3">
                 {reviews.map((review, index) => (
-                  <div key={index} className="bg-gray-800 p-4 rounded-lg">
+                  <div key={index} className="bg-gray-800 p-4 rounded-lg screen-max-6:w-auto">
                     <p className="text-sm text-gray-400">{review.date}</p>
                     <p className="font-bold">{review.reviewerName}</p>
                     <p className="text-sm">Rating: {review.rating} ⭐</p>

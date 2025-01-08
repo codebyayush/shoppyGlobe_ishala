@@ -35,14 +35,16 @@ const ProductDetails = ({ clickFunc }) => {
     }
   };
 
-  //making sure to run the fetchProductDetails only when url changes
+  //making sure to run the fetchProductDetails only when the url changes
   useEffect(() => {
     fetchProductDetails();
   }, [url]);
 
   //add item to cart if it doesn't exists
-  //increases quantity if it does exist
+  //increases quantity if it exists
   const addItemHandler = (item) => {
+    //after updating the cart, we will update the total amount 
+    //and with clickFunc we will show a toast notification
     dispatch(addItemToCart(item));
     dispatch(totalAmount());
     clickFunc("Item added to cart");
