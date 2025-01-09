@@ -1,69 +1,50 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../loader/Loader";
 import { addItemToCart } from "../../store/slices/cartSlice";
 import { totalAmount } from "../../store/slices/cartSlice";
 import { useDispatch } from "react-redux";
 import ItemDetails from "../item-details/ItemDetails";
+import useFetch from "../../hooks/useFetch";
 
 const ProductDetails = ({ clickFunc }) => {
-  // getting productId from the parameters of the url
+  //getting productId from the parameters of the url
   const { productId } = useParams();
 
   const url = `https://dummyjson.com/products/${productId}`;
-  const [product, setProduct] = useState(null);
-
   const dispatch = useDispatch();
 
-  //fetching data for the given url
-  const fetchProductDetails = async () => {
-    try {
-      const result = await axios.get(url);
+  //fetching data for the given URL
+  const { data, loading, error } = useFetch(url);
 
-      if (result.status === 200) {
-        setProduct(result.data);
-      } else {
-        console.error("Error fetching product details:", result.statusText);
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error("Server error:", error.response.data);
-      } else {
-        console.error("Unexpected error:", error.message);
-      }
-    }
-  };
-
-  //making sure to run the fetchProductDetails only when the url changes
-  useEffect(() => {
-    fetchProductDetails();
-  }, [url]);
-
-  //add item to cart if it doesn't exists
+  //add item to cart if it doesn't exist,
   //increases quantity if it exists
   const addItemHandler = (item) => {
-    //after updating the cart, we will update the total amount 
-    //and with clickFunc we will show a toast notification
     dispatch(addItemToCart(item));
     dispatch(totalAmount());
     clickFunc("Item added to cart");
   };
 
-  
   return (
     <>
-      {product ? (
-        <>
-          <ItemDetails
-            product={product}
-            addItemHandler={() => addItemHandler(product)}
-          />
-        </>
-      ) : (
-        <div className=" text-center pt-72 bg-gray-900 h-screen">
+      {/* conditionally rendering in loading, error and product */}
+      {loading && (
+        <div className="text-center pt-72 bg-gray-900 h-screen">
           <Loader />
         </div>
+      )}
+      {error && (
+        <div className="text-center pt-72 bg-gray-900 h-screen text-white">
+          <h2 className="font-bold text-xl">
+            Error fetching product details: {error.message}
+          </h2>
+        </div>
+      )}
+      {data && (
+        <ItemDetails
+          product={data}
+          addItemHandler={() => addItemHandler(data)}
+        />
       )}
     </>
   );

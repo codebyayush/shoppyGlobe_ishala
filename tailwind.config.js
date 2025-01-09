@@ -6,10 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        custom: ['Rubik', 'sans-serif'],
-        customBold: ['Rubik-bold', 'sans-serif'],
-      },
+      // added custom screens to the tailwind configuration
       screens: {
         "screen-max-4": { max: "400px" },
         "screen-max-6": { max: "600px" },

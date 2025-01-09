@@ -1,6 +1,7 @@
 import React from 'react'
 
 const NotFound = () => {
+  // this will render when the route is not found
   return (
     <>
       <div className="pt-28 min-h-screen bg-gray-900 screen-max-6:w-fit">

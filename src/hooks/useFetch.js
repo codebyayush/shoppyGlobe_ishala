@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function useFetch(url) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -15,7 +15,6 @@ function useFetch(url) {
     //passing cancel token to the request
     axios.get(url, { cancelToken: source.token }) 
       .then(res => {
-        setLoading(false); 
         setData(res.data);
       })
       .catch(err => {
@@ -23,13 +22,14 @@ function useFetch(url) {
         if (axios.isCancel(err)) {
           console.log('request canceled', err.message);
         } else {
-          setLoading(false); 
           setError('error occurred');
         }
-      });
-  
-    //cleanup function to cancel the request if the component unmounts
-    return () => {
+      }).finally(() => {
+        setLoading(false);
+      })
+      
+      //cleanup function to cancel the request if the component unmounts
+      return () => {
       source.cancel('operation canceled');
     };
   }, [url]);

@@ -1,11 +1,12 @@
 import React from 'react'
 import "./style.css"
 
-const Loader = () => {
+const Loader = ({className}) => {
 
+  // used className prop to add styling to the loader
   return (
     <>
-      <span className='loader'></span>
+      <span className={`loader ${className}`}></span>
     </>
   )
 }

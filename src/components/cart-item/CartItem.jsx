@@ -1,43 +1,33 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ItemDetails from "../item-details/ItemDetails";
 import Loader from "../loader/Loader";
+import useFetch from "../../hooks/useFetch";
 
 const CartItem = () => {
-  const { productId } = useParams();
 
+  //getting productId from the parameters of the url
+  const { productId } = useParams();
   const url = `https://dummyjson.com/products/${productId}`;
 
-  const [product, setProduct] = useState(null);
-
-  const fetchProductDetails = async () => {
-    try {
-      const result = await axios.get(url);
-
-      if (result.status === 200) {
-        setProduct(result.data);
-      } else {
-        console.error("Error fetching product details:", result.statusText);
-      }
-    } catch (error) {
-      console.error("Error fetching product details:", result.statusText);
-    }
-  };
-
-  useEffect(() => {
-    fetchProductDetails();
-  }, [productId]);
+  // using custom hook
+  const { data, loading, error } = useFetch(url);
 
   return (
     <>
-      {product ? (
-        <ItemDetails product={product} />
-      ) : (
-        <div className="flex justify-center items-center h-screen bg-gray-900">
+      {loading && (
+        <div className="text-center pt-72 bg-gray-900 h-screen">
           <Loader />
         </div>
       )}
+      {error && (
+        <div className="text-center pt-72 bg-gray-900 h-screen text-white">
+          <h2 className="font-bold text-xl">
+            Error fetching product details: {error.message}
+          </h2>
+        </div>
+      )}
+      {data && <ItemDetails product={data} />}
     </>
   );
 };

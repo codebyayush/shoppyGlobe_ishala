@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//using amount to store total amount of the cart
 const initialState = {
   cartArray: [],
   amount: 0,
@@ -11,6 +12,8 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
 
+    //this will add item to the cart
+    //if it exists, it will increase the quantity
     addItemToCart: (state, action) => {
       const product = action.payload;
 
@@ -34,6 +37,7 @@ const cartSlice = createSlice({
       state.totalItemsInCart = state.cartArray.length;
     },
 
+    //this will remove item from the cart
     deleteItemFromCart: (state, action) => {
       const productId = action.payload;
 
@@ -44,6 +48,7 @@ const cartSlice = createSlice({
       state.totalItemsInCart = state.cartArray.length;
     },
 
+    //we will run this function whenever we add or remove an item from the cart
     totalAmount: (state) => {
       const newAmount = state.cartArray.reduce((acc, curr) => {
         const quantity = Number(curr.quantity) || 0;
@@ -60,6 +65,7 @@ const cartSlice = createSlice({
       };
     },
 
+    //this function will add one to the quantity of the product
     plusOne: (state, action) => {
 
       const cartId = action.payload;
@@ -75,6 +81,7 @@ const cartSlice = createSlice({
 
     },
 
+    //this function will reduce one from the quantity of the product
     minusOne: (state, action) => {
       const cartId = action.payload;
 

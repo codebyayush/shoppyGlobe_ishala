@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   storeArr: [],
   filteredArr: [], 
-  totalItem: 0,
 };
 
 const storeSlice = createSlice({
@@ -37,6 +36,7 @@ const storeSlice = createSlice({
       };
     },
 
+    //this will filter the items based on the search query
     filterItemSearch: (state, action) => {
       const filteredItems = action.payload;
 

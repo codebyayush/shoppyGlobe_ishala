@@ -4,14 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-    
+  //used useNavigate to navigate to different pages
+    //totalItemsInCart will get updated every time the cart gets updated
   const navigate = useNavigate();
   const totalItemsInCart = useSelector(state => state.cart.totalItemsInCart);
 
   return (
     <>  
         <div className="w-full flex fixed bg-gray-900 p-3 justify-evenly text-4xl screen-max-9:gap-2 screen-max-9:flex-col screen-max-9:items-center">
-        <h1 className="font-medium text-yellow-500 screen-max-9:pl-10 cursor-pointer">
+        <h1 className="font-medium text-yellow-500 screen-max-9:pl-10 cursor-pointer" onClick={() => navigate("/productList", { state: { refresh: true } })}>
           ShoppyGlobe
         </h1>
         <SearchBar className={"screen-max-9:w-[250px] -ml-20 flex items-center mb-2 screen-max-9:pt-3"}/>
