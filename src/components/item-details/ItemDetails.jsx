@@ -1,7 +1,7 @@
 import React from "react";
 
 //created a reusable component for displaying product details
-const ItemDetails = ({ product, addItemHandler }) => {
+const ItemDetails = ({ product, addItemHandler, removeItemHandler }) => {
   const {
     title,
     description,
@@ -89,6 +89,14 @@ const ItemDetails = ({ product, addItemHandler }) => {
                     className="mt-4 bg-purple-800 w-full text-xl p-5 font-bold hover:bg-purple-500"
                   >
                     Add To Cart
+                  </button>
+                )}
+                {removeItemHandler && (
+                  <button
+                    onClick={() => removeItemHandler(product)}
+                    className="mt-4 bg-purple-800 w-full text-xl p-5 font-bold hover:bg-purple-500"
+                  >
+                    Remove From Cart
                   </button>
                 )}
               </div>

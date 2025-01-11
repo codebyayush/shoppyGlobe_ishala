@@ -12,7 +12,7 @@ const Cart = () => {
   const navigate = useNavigate();
 
   //deleting item from cart
-  const deleteItemHandler = async (cartId) => {
+  const deleteItemHandler = (cartId) => {
     console.log("cartId from cartJSX-", cartId);
 
     try {
@@ -24,7 +24,7 @@ const Cart = () => {
   };
 
   //increases quantity by one
-  const plusOneClick = async (cartId) => {
+  const plusOneClick = (cartId) => {
     console.log("cartId from cartJSX PLUSCLICK-", cartId);
 
     try {
@@ -38,7 +38,7 @@ const Cart = () => {
   // console.log("Cart.jsx RENDERED", cartArray);
 
   //reduces quantity by one
-  const minusOneClick = async (cartId) => {
+  const minusOneClick = (cartId) => {
     console.log("cartId from cartJSX MINUSCLICK-", cartId);
 
     try {
@@ -57,7 +57,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="pt-28 screen-max-9:pt-60 min-h-screen w-screen bg-gray-900 screen-max-4:w-fit ">
+      <div className="pt-28 screen-max-9:pt-60 min-h-screen w-screen bg-gray-900 screen-max-4:w-fit">
         <h1 className="text-center font-bold text-5xl screen-max-9:text-3xl text-yellow-400">
           Your Cart
         </h1>
@@ -100,7 +100,7 @@ const Cart = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            minusOneClick(item.cartId);
+                            minusOneClick(item.product.id);
                           }}
                           className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 rounded-r hover:scale-105 transition-transform duration-300"
                         >
@@ -112,7 +112,7 @@ const Cart = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteItemHandler(item.cartId);
+                        deleteItemHandler(item.product.id);
                       }}
                       className="pr-4 pl-4 h-1/3 bg-white text-black screen-max-6:p-2 screen-max-7:w-32 screen-max-7:p-2  hover:bg-red-700 hover:text-white hover:scale-110 transition-transform duration-300"
                     >
@@ -124,7 +124,7 @@ const Cart = () => {
             </div>
           ))
         ) : (
-          <h1 className="font-bold text-4xl screen-max-9:text-2xl text-center mt-5 text-yellow-400">
+          <h1 className="font-bold w-screen text-4xl screen-max-9:text-2xl text-center mt-5 text-yellow-400">
             is empty
           </h1>
         )}
@@ -132,7 +132,7 @@ const Cart = () => {
         {!cartArray.length == 0 && (
           <>
             <div className="flex flex-col pb-20 m-auto w-1/2 items-end screen-max-12:w-auto screen-max-12:pr-8">
-              {/* this button doesn't will be a dummy */}
+              {/* this button doesn't work it's dummy */}
               <button
                 type="button"
                 className="p-3 w-52 mt-4 bg-green-300 font-medium hover:bg-green-600 hover:text-white text-black hover:scale-105 transition-transform duration-300"

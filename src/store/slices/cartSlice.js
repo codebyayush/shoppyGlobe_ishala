@@ -41,8 +41,12 @@ const cartSlice = createSlice({
     deleteItemFromCart: (state, action) => {
       const productId = action.payload;
 
+      console.log("productId from cartSlice-", productId);  
+
       state.cartArray = state.cartArray.filter(
-        (product) => product.cartId !== productId
+        (product) => {
+          console.log("product.cartId from cartSlice-", product.product.id);
+          return product.product.id !== productId}
       );
 
       state.totalItemsInCart = state.cartArray.length;
@@ -70,7 +74,7 @@ const cartSlice = createSlice({
 
       const cartId = action.payload;
 
-       state.cartArray.forEach((item) => {
+      state.cartArray.forEach((item) => {
         
         if (item.cartId === cartId) {
           item.quantity += 1;
@@ -87,7 +91,7 @@ const cartSlice = createSlice({
 
       state.cartArray = state.cartArray.reduce((acc, curr) => {
 
-        if(curr.cartId == cartId){
+        if(curr.product.id == cartId){
             if(curr.quantity > 1){
 
               acc.push({...curr, quantity: curr.quantity - 1})

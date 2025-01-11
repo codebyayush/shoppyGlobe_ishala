@@ -28,7 +28,7 @@ const ProductList = ({ clickFunc, loading }) => {
 
   return (
     <>
-      <div className=" pt-24 bg-gray-900 screen-max-6:w-auto min-h-screen">
+      <div className=" pt-24 bg-gray-900 screen-max-6:w-fit min-h-screen">
         <div className="flex flex-col p-10 gap-5 items-center screen-max-9:mt-20">
           <div className="flex flex-wrap gap-10 justify-center mb-14">
             {/* using index as a key for unique identity */}
