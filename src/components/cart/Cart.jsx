@@ -57,7 +57,7 @@ const Cart = () => {
 
   return (
     <>
-      <div className="pt-28 screen-max-9:pt-60 min-h-screen w-screen bg-gray-900 screen-max-4:w-fit ">
+      <div className="pt-28 screen-max-9:pt-60 min-h-screen w-screen bg-gray-900 screen-max-4:w-fit">
         <h1 className="text-center font-bold text-5xl screen-max-9:text-3xl text-yellow-400">
           Your Cart
         </h1>
@@ -124,7 +124,7 @@ const Cart = () => {
             </div>
           ))
         ) : (
-          <h1 className="font-bold text-4xl screen-max-9:text-2xl text-center mt-5 text-yellow-400">
+          <h1 className="font-bold w-screen text-4xl screen-max-9:text-2xl text-center mt-5 text-yellow-400">
             is empty
           </h1>
         )}
@@ -132,7 +132,7 @@ const Cart = () => {
         {!cartArray.length == 0 && (
           <>
             <div className="flex flex-col pb-20 m-auto w-1/2 items-end screen-max-12:w-auto screen-max-12:pr-8">
-              {/* this button doesn't will be a dummy */}
+              {/* this button doesn't work it's dummy */}
               <button
                 type="button"
                 className="p-3 w-52 mt-4 bg-green-300 font-medium hover:bg-green-600 hover:text-white text-black hover:scale-105 transition-transform duration-300"

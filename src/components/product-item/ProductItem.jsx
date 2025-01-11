@@ -25,8 +25,7 @@ const ProductItem = ({ clickFunc }) => {
 
   return (
     <>
-
-      <div className="flex justify-center screen-max-7:w-fit screen-max-7:h-fit screen-max-12:flex-col screen-max-12:items-center bg-gray-900 min-h-screen">
+      <div className="flex justify-center w-screen screen-max-6:w-fit screen-max-7:h-fit screen-max-12:flex-col screen-max-12:items-center bg-gray-900 h-fit ">
   {/* product Image */}
   <div className="pt-40 screen-max-9:pt-52 screen-max-12:w-[500px] p-4 screen-max-7:w-[300px]">
     <img

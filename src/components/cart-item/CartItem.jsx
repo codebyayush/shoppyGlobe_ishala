@@ -11,23 +11,29 @@ const CartItem = () => {
   const url = `https://dummyjson.com/products/${productId}`;
 
   // using custom hook
-  const { data, loading, error } = useFetch(url);
+  const { data, error } = useFetch(url);
 
   return (
     <>
-      {loading && (
-        <div className="text-center pt-72 bg-gray-900 h-screen">
-          <Loader />
-        </div>
-      )}
-      {error && (
+    {/* if data is available render ItemDetails */}
+       {data ? (
+        <ItemDetails
+          product={data}
+          addItemHandler={() => addItemHandler(data)}
+        />
+      ) : error ? (
+        // if error is available render error message
         <div className="text-center pt-72 bg-gray-900 h-screen text-white">
           <h2 className="font-bold text-xl">
             Error fetching product details: {error.message}
           </h2>
         </div>
+      ) : (
+        // if data & error is not available then we'll render loader
+        <div className="text-center h-screen pt-72 bg-gray-900 border border-white">
+          <Loader />
+        </div>
       )}
-      {data && <ItemDetails product={data} />}
     </>
   );
 };
