@@ -8,6 +8,7 @@ const Header = () => {
   //totalItemsInCart will get updated every time the cart gets updated
   const navigate = useNavigate();
   const totalItemsInCart = useSelector((state) => state.cart.totalItemsInCart);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
     <>
@@ -44,6 +45,14 @@ const Header = () => {
                   {totalItemsInCart}
                 </p>
               </div>
+            </li>
+            <li
+              className="hover:bg-yellow-300 hover:text-gray-900 cursor-pointer p-2"
+              onClick={() =>
+                navigate("/authentication", { state: { refresh: true } })
+              }
+            >
+              {isLoggedIn ? "Logout" : "Login"}
             </li>
           </ul>
         </div>

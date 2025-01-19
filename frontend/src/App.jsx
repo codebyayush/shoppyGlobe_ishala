@@ -15,6 +15,7 @@ const Cart = lazy(() => import("./components/cart/Cart"));
 const ProductItem = lazy(() => import("./components/product-item/ProductItem"));
 const CartItem = lazy(() => import("./components/cart-item/CartItem"));
 const NotFound = lazy(() => import("./components/not-found/NotFound"));
+const Authentication = lazy(() => import("./components/authentication/Authentication"));
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +32,6 @@ function App() {
       dispatch(addAllItems(data.products));
     }
   }, [data, error, dispatch]);
-
 
   //to show toast notification I have installed react-toastify
   //we'll pass this function as a prop to the components
@@ -90,6 +90,9 @@ function App() {
             {/* similarly like ProductDetails we'll fetch the product details on CartItem 
             but without Add to cart button*/}
             <Route path="/cart/:productId" element={<CartItem />} />
+
+            {/* for authentication we'll render Authentication component */}
+            <Route path="/authentication" element={<Authentication />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
