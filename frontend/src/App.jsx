@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import Header from "./components/header/Header";
 import ProductList from "./components/product-list/ProductList";
@@ -8,9 +9,9 @@ import useFetch from "./hooks/useFetch";
 import { addAllItems } from "./store/slices/storeSlice";
 import ProductDetails from "./components/product-details/ProductDetails";
 import Loader from "./components/loader/Loader";
+import { setIsLoginUsingToken } from "./store/slices/authSlice";
 
-
-//made use of lazy loading to load the components only when needed
+//used of lazy loading to load the components only when needed
 const Cart = lazy(() => import("./components/cart/Cart"));
 const ProductItem = lazy(() => import("./components/product-item/ProductItem"));
 const CartItem = lazy(() => import("./components/cart-item/CartItem"));
@@ -32,6 +33,32 @@ function App() {
       dispatch(addAllItems(data.products));
     }
   }, [data, error, dispatch]);
+
+// useEffect to check if the user is login or not
+  useEffect(() => {   
+    const isLoginCheck = async () => {
+      const waitForMe = await axios.get("http://localhost:4000/islogin", {
+        withCredentials: true,
+      });
+  
+      if (waitForMe.status === 200) {
+        console.log("user is logged in--", waitForMe);
+        dispatch(setIsLoginUsingToken(waitForMe.data));
+        
+        // const result = await fetchCart();
+        
+        // if(result.status === 200 || result.status === 201){ 
+        //   dispatch(addAllItemsToCart(result.data));
+        //   dispatch(totalAmount());
+        // }
+      }
+
+      console.log("current login status-- ", waitForMe);
+      return;
+    };
+    isLoginCheck();
+  }, [])
+
 
   //to show toast notification I have installed react-toastify
   //we'll pass this function as a prop to the components

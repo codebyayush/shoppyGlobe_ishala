@@ -1,14 +1,40 @@
 import React from "react";
 import SearchBar from "../search-bar/SearchBar";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogout } from "../../store/slices/authSlice";
+import axios from "axios";
 
 const Header = () => {
   //used useNavigate to navigate to different pages
   //totalItemsInCart will get updated every time the cart gets updated
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const totalItemsInCart = useSelector((state) => state.cart.totalItemsInCart);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  //state: {refresh: true} will force the component to re-render
+  const loginLogoutHandler = async () => {
+    //if user is logged in then we have to logout first
+    //then navigate to login page
+    if(isLoggedIn){
+      dispatch(handleLogout());
+      
+      const result = await axios.get("http://localhost:4000/logout", {
+        withCredentials: true,
+      });
+      if (result.status == 200) {
+        navigate("/authentication");
+        // dispatch(clearCartOnLogout());
+        console.log("logout result--", result);
+      }
+    }
+    else{
+      navigate("/authentication");
+    };
+
+    return;
+  }
 
   return (
     <>
@@ -48,9 +74,7 @@ const Header = () => {
             </li>
             <li
               className="hover:bg-yellow-300 hover:text-gray-900 cursor-pointer p-2"
-              onClick={() =>
-                navigate("/authentication", { state: { refresh: true } })
-              }
+              onClick={loginLogoutHandler}
             >
               {isLoggedIn ? "Logout" : "Login"}
             </li>

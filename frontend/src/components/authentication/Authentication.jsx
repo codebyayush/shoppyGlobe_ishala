@@ -38,8 +38,8 @@ const Authentication = () => {
           { withCredentials: true }
         );
 
-        // console.log("response from auth.jsx--", response);
-        
+        console.log("response from authentication.jsx--", response);
+     
         
         if (response.status === 200 || response.status === 201) {
           dispatch(handleLogin());
@@ -55,7 +55,7 @@ const Authentication = () => {
             console.error("Error fetching cart items:", error.message);
           }
         }
-        navigate("/store");
+        navigate("/");
       } catch (error) {
         console.error("Login failed:", error.message);
       }
@@ -63,16 +63,16 @@ const Authentication = () => {
       emailRef.current.value = "";
       passRef.current.value = "";
     } else {
-        // if login mode is false then we'll create a new user
+    // if login mode is false then we'll create a new user
       const firstName = fnameRef.current.value.trim();
       const lastName = lnameRef.current.value.trim();
       const address = addRef.current.value.trim();
-      const phoneNumber = phoneRef.current.value.trim();
+      const phone = phoneRef.current.value.trim();
       const password = passRef.current.value;
       const confirmPassword = confirmPassRef.current.value;
 
     //verifying the entered values
-      if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      if (phone.length !== 10 || isNaN(phone)) {
         alert("Phone number must be exactly 10 digits.");
         return;
       }
@@ -98,13 +98,14 @@ const Authentication = () => {
           firstName,
           lastName,
           address,
-          phoneNumber,
+          phone,
           email,
           password,
         });
 
         if (response.status === 201) {
-          console.log("User created successfully");
+          alert("account created successfully, Please login.");
+          dispatch(loginSignupSwitchHandler());
         } else {
           console.error("Failed to create new user:", response.data);
         }
@@ -129,8 +130,8 @@ const Authentication = () => {
 
   return (
     <>
-      <div className="w-full pt-16 screen-max-6:h-[1200px] pb-10 bg-gray-900 h-auto screen-max-6:w-fit min-h-screen screen-max-12:pt-48">
-        <div className="ml-auto  mr-auto w-[500px] p-5 border-2 border-stone-200 mt-20 max-h-[700px] overflow-y-scroll ">
+      <div className="w-full pt-16 screen-max-6:h-[1200px] pb-10 bg-gray-900 h-auto screen-max-6:w-fit min-h-screen screen-max-9:pt-32">
+        <div className="ml-auto mr-auto w-[500px] p-5 border-2 border-stone-200 mt-20 max-h-[700px] overflow-y-scroll ">
           <h2 className="text-3xl font-bold text-center text-stone-100">
             {loginMode ? "Login" : "Sign up"}
           </h2>
