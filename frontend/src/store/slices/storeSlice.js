@@ -23,10 +23,6 @@ const storeSlice = createSlice({
         }
       });
     },
-    //total items of the store
-    totalCount: (state) => {
-      state.totalItem = state.storeArr.length;
-    },
 
     //this removes all items at once
     removeAllItems: (state) => {

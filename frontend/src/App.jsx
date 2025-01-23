@@ -16,38 +16,49 @@ const Cart = lazy(() => import("./components/cart/Cart"));
 const ProductItem = lazy(() => import("./components/product-item/ProductItem"));
 const CartItem = lazy(() => import("./components/cart-item/CartItem"));
 const NotFound = lazy(() => import("./components/not-found/NotFound"));
-const Authentication = lazy(() => import("./components/authentication/Authentication"));
+const Authentication = lazy(() =>
+  import("./components/authentication/Authentication")
+);
 
 function App() {
   const dispatch = useDispatch();
 
   //fetching data on initial render
   //using useFetch custom hook to fetch products
-  const { data, loading, error } = useFetch("https://dummyjson.com/products");
+  const { data, loading, error } = useFetch(
+    "http://localhost:4000/getProducts"
+  );
 
   // to handle error and data from useFetch we'll make use of useEffect
   useEffect(() => {
-    if (error) {
-      notify(`Error fetching products:  ${error.message}`);
-    } else if (data) {
-      dispatch(addAllItems(data.products));
+
+    // console.log("products---",data);
+    
+    try {
+      if (data) {
+        const products = data.products;
+        dispatch(addAllItems(products));
+        // dispatch(totalAmount());
+      }
+    } catch (error) {
+      console.log("Error fetching products:", error);
     }
   }, [data, error, dispatch]);
 
-// useEffect to check if the user is login or not
-  useEffect(() => {   
+  // useEffect to check if the user is login or not
+  useEffect(() => {
     const isLoginCheck = async () => {
       const waitForMe = await axios.get("http://localhost:4000/islogin", {
         withCredentials: true,
       });
-  
+
       if (waitForMe.status === 200) {
         console.log("user is logged in--", waitForMe);
         dispatch(setIsLoginUsingToken(waitForMe.data));
-        
+
         // const result = await fetchCart();
-        
-        // if(result.status === 200 || result.status === 201){ 
+
+        // if(result.status === 200 || result.status === 201){
         //   dispatch(addAllItemsToCart(result.data));
         //   dispatch(totalAmount());
         // }
@@ -56,9 +67,9 @@ function App() {
       console.log("current login status-- ", waitForMe);
       return;
     };
-    isLoginCheck();
-  }, [])
 
+    isLoginCheck();
+  }, []);
 
   //to show toast notification I have installed react-toastify
   //we'll pass this function as a prop to the components
@@ -77,10 +88,12 @@ function App() {
 
   return (
     <>
-    {/* made use of react router to navigate different pages */}
+      {/* made use of react router to navigate different pages */}
       <BrowserRouter>
         <Header />
-        <Suspense fallback={<Loader className={"flex justify-center items-center"}/>}>
+        <Suspense
+          fallback={<Loader className={"flex justify-center items-center"} />}
+        >
           <Routes>
             {/* for unknown routes we'll redirect to NotFound component*/}
             <Route path="*" element={<NotFound />} />

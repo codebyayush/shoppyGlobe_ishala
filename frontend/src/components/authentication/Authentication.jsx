@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleLogin, loginSignupSwitchHandler } from "../../store/slices/authSlice";
-import { fetchCart } from "../../utils/cartUtils";
+// import { fetchCart } from "../../utils/cartUtils";
 import { addAllItemsToCart, totalAmount } from "../../store/slices/cartSlice";
 
 const Authentication = () => {
@@ -38,24 +38,29 @@ const Authentication = () => {
           { withCredentials: true }
         );
 
-        console.log("response from authentication.jsx--", response);
+        // console.log("response from authentication.jsx--", response);
      
         
         if (response.status === 200 || response.status === 201) {
           dispatch(handleLogin());
-          const result = await fetchCart();
+          
+          // const result = await fetchCart();
           // console.log("result from auth.jsx--", result);
 
-          try {
-            if (result.status === 200 || result.status === 201) {
-              dispatch(addAllItemsToCart(result.data));
-              dispatch(totalAmount());
-            }
-          } catch (error) {
-            console.error("Error fetching cart items:", error.message);
-          }
+          // try {
+          //   if (result.status === 200 || result.status === 201) {
+          //     dispatch(addAllItemsToCart(result.data));
+          //     dispatch(totalAmount());
+          //   }
+          // } catch (error) {
+          //   console.error("Error fetching cart items:", error.message);
+          // }
+          
+
+          
+        
         }
-        navigate("/");
+        navigate("/productList");
       } catch (error) {
         console.error("Login failed:", error.message);
       }

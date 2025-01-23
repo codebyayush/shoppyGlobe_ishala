@@ -12,26 +12,32 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
 
+    //this will add all the items on the initial render of the productList
+    addAllItemsToCart: (state, action) => {
+      const newProducts = action.payload;
+      state.cartArray = newProducts;
+      state.totalItemsInCart = state.cartArray.length;
+    },
+
     //this will add item to the cart
     //if it exists, it will increase the quantity
     addItemToCart: (state, action) => {
       const product = action.payload;
 
       const exists = state.cartArray.some(
-        (item) => item.product.id === product.id
-      );
+        (item) => item._id === product._id
+      )
 
-      if (!exists) {
-        state.cartArray = [
-          ...state.cartArray,
-          { product: product, quantity: 1, cartId: Date.now() },
-        ];
-      } else {
-        state.cartArray = state.cartArray.map((item) =>
-          item.product.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+      if(!exists){
+        state.cartArray = [...state.cartArray, product];
+      }
+      else{
+        state.cartArray = state.cartArray.map((item) => {
+          if(item._id === product._id){
+            return {...item, quantity: item.quantity + 1};
+          }
+          return item;
+        });
       }
 
       state.totalItemsInCart = state.cartArray.length;
@@ -45,8 +51,8 @@ const cartSlice = createSlice({
 
       state.cartArray = state.cartArray.filter(
         (product) => {
-          console.log("product.cartId from cartSlice-", product.product.id);
-          return product.product.id !== productId}
+          console.log("product.cartId from cartSlice-", product._id);
+          return product._id !== productId}
       );
 
       state.totalItemsInCart = state.cartArray.length;
@@ -54,18 +60,18 @@ const cartSlice = createSlice({
 
     //we will run this function whenever we add or remove an item from the cart
     totalAmount: (state) => {
+      
       const newAmount = state.cartArray.reduce((acc, curr) => {
-        const quantity = Number(curr.quantity) || 0;
-        const price = Number(curr.product.price) || 0;
-        return acc + quantity * price;
+          acc += curr.price * curr.quantity;
+          return acc;
       }, 0);
 
-      const roundOff = newAmount.toFixed(2);
+      const roundOffAmount = newAmount.toFixed(2);
 
       //return new state object with new amount
       return {
         ...state,
-        amount: roundOff,
+        amount: roundOffAmount,
       };
     },
 
@@ -76,7 +82,7 @@ const cartSlice = createSlice({
 
       state.cartArray.forEach((item) => {
         
-        if (item.cartId === cartId) {
+        if (item._id === cartId) {
           item.quantity += 1;
           }
         });
@@ -91,7 +97,7 @@ const cartSlice = createSlice({
 
       state.cartArray = state.cartArray.reduce((acc, curr) => {
 
-        if(curr.product.id == cartId){
+        if(curr._id == cartId){
             if(curr.quantity > 1){
 
               acc.push({...curr, quantity: curr.quantity - 1})
@@ -103,7 +109,6 @@ const cartSlice = createSlice({
           }
 
         return acc;
-
       }, [])
 
       state.totalItemsInCart = state.cartArray.length;

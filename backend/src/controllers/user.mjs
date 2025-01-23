@@ -43,7 +43,7 @@ export const handleCreateNewUser = async (req, res) => {
 export const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
+    //checking if the user exists in the User collection
     const user = await User.findOne({ email });
     if (!user) {
       throw new Error("User does not exist");
@@ -55,6 +55,7 @@ export const handleLogin = async (req, res) => {
       throw new Error("Invalid password");
     }
 
+    //we'll create a jwt token using the userId if the login is successful
     const token = createToken({ id: user._id });
     console.log("token from login--", token);
 
@@ -80,7 +81,7 @@ export const handleLogin = async (req, res) => {
 export const isLoginCheck = async (req, res) => {
   try {
     //getting the userId from req object from the middleware
-    const userId = req.userId.id;
+    const userId = req.userId;
 
     console.log("userId from isLoginCheck---", userId);
 
